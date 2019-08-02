@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="terminal">
+    <xs:complexType mixed="true">
+      <xs:sequence>
+        <xs:element ref="expr" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="column_name">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="terminal"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="expr">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="column_name"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="select_list_expr">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="expr"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="table_name">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="terminal"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="select_list">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded" minOccurs="0">
+        <xs:element ref="select_list_expr"/>
+        <xs:element ref="terminal"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="from_clause">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="terminal"/>
+        <xs:element ref="table_name"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="select_expr">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="terminal"/>
+        <xs:element ref="select_list"/>
+        <xs:element ref="from_clause"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="select_stmt">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="select_expr"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="sql_stmt">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="select_stmt"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="sql_stmt_list">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="sql_stmt"/>
+        <xs:element ref="terminal"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="parse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="sql_stmt_list"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
